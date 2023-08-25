@@ -1,26 +1,26 @@
 on:
   schedule:
-    - cron: '0 6 * * 3'  
+    - cron: '0 10 10 * * ?'    - 计划任务：'0 6 * * 3'  
 
 jobs:
   run_python_script:
-    runs-on: ubuntu-latest
+    runs-on:     运行：ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name:       - 名称：签出存储库
+        uses:         使用：actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v3
+      - name:       - 名称：设置Python
+        uses:         使用：actions/setup-python@v3
         with:
-          python-version: 3.x
+          python-version:           python-版本：3.x
 
-      - name: 安装依赖环境
+      - name:       - 名称：安装依赖环境
         run: |
           pip install -r requirements.txt
 
-      - name: 获取参数
-        id: get_variables
+      - name:       - 名称：获取参数
+        id:         id: 获取变量
         run: |
           WORKFLOW_PATH="${{ github.workflow }}"
           WORKFLOW_NAME=$(basename $WORKFLOW_PATH)
@@ -29,7 +29,7 @@ jobs:
           WORKFLOW_NAME=${WORKFLOW_NAME^^}
           echo "WORKFLOW_NAME=$WORKFLOW_NAME" >> $GITHUB_OUTPUT
 
-      - name: 运行Python脚本
+      - name:       - 名称：运行Python脚本
         run: |
           echo "${{ steps.get_variables.outputs.WORKFLOW_NAME }}"
           python RunTrigger.py ${{ secrets.HAMIBOT_TOKEN }} '${{ vars.HAMIBOT_PARAS }}' ${{ steps.get_variables.outputs.WORKFLOW_NAME }}
